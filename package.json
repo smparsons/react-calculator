@@ -15,5 +15,24 @@
   "bugs": {
     "url": "https://github.com/smparsons/react-calc/issues"
   },
-  "homepage": "https://github.com/smparsons/react-calc#readme"
+  "homepage": "https://github.com/smparsons/react-calc#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "copy-webpack-plugin": "^5.0.2",
+    "prettier": "^1.16.4",
+    "prettier-tslint": "^0.4.2",
+    "source-map-loader": "^0.2.4",
+    "tslint": "^5.15.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.4.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1"
+  }
 }
