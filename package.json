@@ -14,9 +14,9 @@
   "author": "Samuel Parsons",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/smparsons/react-calc/issues"
+    "url": "https://github.com/smparsons/react-calculator/issues"
   },
-  "homepage": "https://github.com/smparsons/react-calc#readme",
+  "homepage": "https://github.com/smparsons/react-calculator#readme",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
