@@ -2,6 +2,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import 'index.css'
 
-import { Hello } from './components/Hello'
+import { Calculator } from './components/calculator'
 
-ReactDOM.render(<Hello compiler="TypeScript" framework="React" />, document.getElementById('example'))
+ReactDOM.render(<Calculator />, document.getElementById('example'))

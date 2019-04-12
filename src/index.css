@@ -1,3 +1,44 @@
-.custom-header {
-    color: red;
+.calculator-wrapper {
+  width: 300px;
+  height: 400px;
+  background-color: black;
+}
+
+.calculator-display {
+  height: 75px;
+  background-color: #303030;
+  color: white;
+  font-size: 4em;
+  text-align: right;
+}
+
+.calculator-button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2px;
+  height: 65px;
+}
+
+.calculator-button-bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-gap: 2px;
+  height: 65px;
+}
+
+.calculator-button {
+  color: white;
+  font-size: 1.5em;
+}
+
+.number {
+  background-color: #686868;
+}
+
+.helper {
+  background-color: #484848;
+}
+
+.operator {
+  background-color: orange;
 }
