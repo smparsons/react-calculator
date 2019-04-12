@@ -1,7 +1,7 @@
 .calculator-wrapper {
   width: 300px;
-  height: 400px;
   background-color: black;
+  border: 1px solid black;
 }
 
 .calculator-display {
@@ -12,23 +12,26 @@
   text-align: right;
 }
 
+.calculator-buttons {
+  display: grid;
+  gap: 1px;
+}
+
 .calculator-button-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 2px;
-  height: 65px;
-}
-
-.calculator-button-bottom-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  grid-gap: 2px;
+  gap: 1px;
   height: 65px;
 }
 
 .calculator-button {
   color: white;
   font-size: 1.5em;
+}
+
+.zero {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .number {
