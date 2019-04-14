@@ -15,6 +15,7 @@
     "no-any": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
+    "jsx-no-lambda": false,
     "typedef": [true, "call-signature"]
   }
 }

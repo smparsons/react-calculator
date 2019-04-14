@@ -31,18 +31,17 @@ module.exports = {
         use: 'tslint-loader'
       },
       {
-        test: /\.tsx$/,
+        test: [/\.ts$/, /\.tsx$/],
         exclude: [/node_modules/],
         use: 'awesome-typescript-loader'
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin(), 
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.html'
