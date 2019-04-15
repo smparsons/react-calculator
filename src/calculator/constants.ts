@@ -5,15 +5,13 @@ export const operators = {
   divide: 'divide'
 }
 
+export const actions = {
+  equals: 'equals',
+  clear: 'clear'
+}
+
 export const inputSteps = {
   waitingForFirstOperand: 'waitingForFirstOperand',
   waitingForOperator: 'waitingForOperator',
   waitingForSecondOperand: 'waitingForSecondOperand'
-}
-
-export const calculatorButtonTypes = {
-  number: 'number',
-  operator: 'operator',
-  clear: 'clear',
-  equals: 'equals'
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { clearCalculator, equalsPressed, numberPressed, operatorPressed } from './actions'
-import { operators } from './constants'
+import { ActionButton, NumberButton, OperatorButton } from './buttons'
+import { actions, operators } from './constants'
 import { calculatorReducer } from './reducer'
 import { calculatorInitialState } from './types'
 
@@ -12,65 +12,33 @@ export const Calculator = (): JSX.Element => {
       <div className="calculator-display">{state.display}</div>
       <div className="calculator-buttons">
         <div className="calculator-button-row">
-          <button className="calculator-button helper" onClick={() => dispatch(clearCalculator())}>
-            AC
-          </button>
-          <button className="calculator-button helper">+/-</button>
-          <button className="calculator-button helper">%</button>
-          <button className="calculator-button operator" onClick={() => dispatch(operatorPressed(operators.divide))}>
-            /
-          </button>
+          <ActionButton actionType={actions.clear} dispatch={dispatch} />
+          <button className="calculator-button action">+/-</button>
+          <button className="calculator-button action">%</button>
+          <OperatorButton operator={operators.divide} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(7))}>
-            7
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(8))}>
-            8
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(9))}>
-            9
-          </button>
-          <button className="calculator-button operator" onClick={() => dispatch(operatorPressed(operators.multiply))}>
-            x
-          </button>
+          <NumberButton value={7} dispatch={dispatch} />
+          <NumberButton value={8} dispatch={dispatch} />
+          <NumberButton value={9} dispatch={dispatch} />
+          <OperatorButton operator={operators.multiply} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(4))}>
-            4
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(5))}>
-            5
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(6))}>
-            6
-          </button>
-          <button className="calculator-button operator" onClick={() => dispatch(operatorPressed(operators.subtract))}>
-            -
-          </button>
+          <NumberButton value={4} dispatch={dispatch} />
+          <NumberButton value={5} dispatch={dispatch} />
+          <NumberButton value={6} dispatch={dispatch} />
+          <OperatorButton operator={operators.subtract} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(1))}>
-            1
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(2))}>
-            2
-          </button>
-          <button className="calculator-button number" onClick={() => dispatch(numberPressed(3))}>
-            3
-          </button>
-          <button className="calculator-button operator" onClick={() => dispatch(operatorPressed(operators.add))}>
-            +
-          </button>
+          <NumberButton value={1} dispatch={dispatch} />
+          <NumberButton value={2} dispatch={dispatch} />
+          <NumberButton value={3} dispatch={dispatch} />
+          <OperatorButton operator={operators.add} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
-          <button className="calculator-button number zero" onClick={() => dispatch(numberPressed(0))}>
-            0
-          </button>
+          <NumberButton value={0} dispatch={dispatch} />
           <button className="calculator-button number">.</button>
-          <button className="calculator-button operator" onClick={() => dispatch(equalsPressed())}>
-            =
-          </button>
+          <ActionButton actionType={actions.equals} dispatch={dispatch} />
         </div>
       </div>
     </div>
