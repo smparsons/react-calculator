@@ -56,16 +56,9 @@ const calculateResult = (state: CalculatorState, operator: string | undefined): 
 }
 
 const handleOperatorPressed = (state: CalculatorState, operator: string): CalculatorState => {
-  switch (state.currentInputStep) {
-    case inputSteps.waitingForFirstOperand || inputSteps.waitingForSecondOperand:
-      return updateOperator(state, operator)
-    case inputSteps.waitingForOperator:
-      return state.firstOperand && !state.secondOperand
-        ? updateOperator(state, operator)
-        : calculateResult(state, operator)
-    default:
-      return state
-  }
+  return state.firstOperand !== undefined && state.secondOperand !== undefined
+    ? calculateResult(state, operator)
+    : updateOperator(state, operator)
 }
 
 export const calculatorReducer = (state: CalculatorState, action: CalculatorAction): CalculatorState => {
