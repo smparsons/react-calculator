@@ -1,5 +1,5 @@
 import { CalculatorAction, CLEAR_CALCULATOR, EQUALS_PRESSED, NUMBER_PRESSED, OPERATOR_PRESSED } from './actions'
-import { inputSteps, operators } from './constants'
+import { operators } from './constants'
 import { calculatorInitialState, CalculatorState } from './types'
 
 const appendNumber = (currentNumber: number | undefined, pressedNumber: number): number =>
@@ -13,12 +13,10 @@ const calculatorFuncs = {
 }
 
 const decideOperandToUpdate = (state: CalculatorState): string => {
-  return state.currentInputStep === inputSteps.waitingForFirstOperand ||
-    (state.currentInputStep === inputSteps.waitingForOperator &&
-      state.firstOperand !== undefined &&
-      state.secondOperand === undefined)
-    ? 'firstOperand'
-    : 'secondOperand'
+  return (state.firstOperand !== undefined && state.secondOperand !== undefined) ||
+    (state.firstOperand !== undefined && state.operator && state.secondOperand === undefined)
+    ? 'secondOperand'
+    : 'firstOperand'
 }
 
 const handleNumberPressed = (state: CalculatorState, pressedNumber: number): CalculatorState => {
@@ -28,15 +26,13 @@ const handleNumberPressed = (state: CalculatorState, pressedNumber: number): Cal
   return {
     ...state,
     [operandToUpdate]: newOperand,
-    display: newOperand,
-    currentInputStep: inputSteps.waitingForOperator
+    display: newOperand
   }
 }
 
 const updateOperator = (state: CalculatorState, operator: string): CalculatorState => ({
   ...state,
-  operator,
-  currentInputStep: inputSteps.waitingForSecondOperand
+  operator
 })
 
 const calculateResult = (state: CalculatorState, operator: string | undefined): CalculatorState => {
@@ -48,8 +44,7 @@ const calculateResult = (state: CalculatorState, operator: string | undefined): 
       operator,
       firstOperand: newOperand,
       secondOperand: undefined,
-      display: newOperand,
-      currentInputStep: operator ? inputSteps.waitingForSecondOperand : inputSteps.waitingForOperator
+      display: newOperand
     }
   }
   return state
