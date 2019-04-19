@@ -8,11 +8,10 @@ const actionSymbols = {
   [actions.decimalPressed]: '.'
 }
 
-// TOOD: Use better class names. This is a little confusing.
 const actionClassNames = {
-  [actions.equals]: 'operator',
-  [actions.clear]: 'action',
-  [actions.decimalPressed]: 'number'
+  [actions.equals]: 'orange',
+  [actions.clear]: 'dark-gray',
+  [actions.decimalPressed]: 'gray'
 }
 
 const actionCreators = {

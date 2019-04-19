@@ -10,7 +10,7 @@ const operatorSymbols = {
 }
 
 export const OperatorButton = ({ operator, dispatch }: OperatorButtonProps): JSX.Element => (
-  <button className="calculator-button operator" onClick={() => dispatch(operatorPressed(operator))}>
+  <button className="calculator-button orange" onClick={() => dispatch(operatorPressed(operator))}>
     {operatorSymbols[operator]}
   </button>
 )

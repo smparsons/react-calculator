@@ -34,14 +34,14 @@
   grid-column-end: 3;
 }
 
-.number {
+.gray {
   background-color: #686868;
 }
 
-.action {
+.dark-gray {
   background-color: #484848;
 }
 
-.operator {
+.orange {
   background-color: orange;
 }
