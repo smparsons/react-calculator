@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { CalculatorAction, numberPressed } from '../actions'
 
-export const NumberButton = ({ value, dispatch }: NumberButtonProps) => {
+export const NumberButton = ({ value, dispatch }: NumberButtonProps): JSX.Element => {
   const baseClass = 'calculator-button number'
   const className = !value ? `${baseClass} zero` : baseClass
 

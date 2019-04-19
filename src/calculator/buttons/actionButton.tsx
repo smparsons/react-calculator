@@ -21,7 +21,7 @@ const actionCreators = {
   [actions.decimalPressed]: decimalPressed
 }
 
-export const ActionButton = ({ actionType, dispatch }: ActionButtonProps) => {
+export const ActionButton = ({ actionType, dispatch }: ActionButtonProps): JSX.Element => {
   const baseClass = 'calculator-button'
   const className = `${baseClass} ${actionClassNames[actionType]}`
   const actionCreator = actionCreators[actionType]
