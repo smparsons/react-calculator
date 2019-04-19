@@ -37,7 +37,7 @@ export const Calculator = (): JSX.Element => {
         </div>
         <div className="calculator-button-row">
           <NumberButton value={0} dispatch={dispatch} />
-          <button className="calculator-button number">.</button>
+          <ActionButton actionType={actions.decimalPressed} dispatch={dispatch} />
           <ActionButton actionType={actions.equals} dispatch={dispatch} />
         </div>
       </div>

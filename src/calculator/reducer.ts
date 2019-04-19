@@ -1,9 +1,19 @@
-import { CalculatorAction, CLEAR_CALCULATOR, EQUALS_PRESSED, NUMBER_PRESSED, OPERATOR_PRESSED } from './actions'
+import {
+  CalculatorAction,
+  CLEAR_CALCULATOR,
+  DECIMAL_PRESSED,
+  EQUALS_PRESSED,
+  NUMBER_PRESSED,
+  OPERATOR_PRESSED
+} from './actions'
 import { operators } from './constants'
 import { calculatorInitialState, CalculatorState } from './types'
 
-const appendNumber = (currentNumber: number | undefined, pressedNumber: number): number =>
-  currentNumber ? parseInt(`${currentNumber.toString()}${pressedNumber.toString()}`, 10) : pressedNumber
+const appendNumber = (currentNumber: string | undefined, pressedNumber: string): string =>
+  currentNumber ? `${currentNumber}${pressedNumber}` : pressedNumber
+
+const appendDecimal = (currentNumber: string | undefined): string =>
+  currentNumber !== undefined && currentNumber.includes('.') ? currentNumber : `${currentNumber || 0}.`
 
 const calculatorFuncs = {
   [operators.add]: (x: number, y: number): number => x + y,
@@ -19,13 +29,19 @@ const decideOperandToUpdate = (state: CalculatorState): string => {
     : 'firstOperand'
 }
 
-const handleNumberPressed = (state: CalculatorState, pressedNumber: number): CalculatorState => {
+const handleNumberPressed = (state: CalculatorState, pressedNumber: string): CalculatorState => {
   const operandToUpdate = decideOperandToUpdate(state)
-  const newOperand = appendNumber(state[operandToUpdate], pressedNumber)
-
   return {
     ...state,
-    [operandToUpdate]: newOperand
+    [operandToUpdate]: appendNumber(state[operandToUpdate], pressedNumber)
+  }
+}
+
+const handleDecimalPressed = (state: CalculatorState): CalculatorState => {
+  const operandToUpdate = decideOperandToUpdate(state)
+  return {
+    ...state,
+    [operandToUpdate]: appendDecimal(state[operandToUpdate])
   }
 }
 
@@ -38,10 +54,10 @@ const calculateResult = (state: CalculatorState, operator: string | undefined): 
   if (state.firstOperand && state.operator) {
     const calculate = calculatorFuncs[state.operator]
     const secondOperand = state.secondOperand === undefined ? state.firstOperand : state.secondOperand
-    const newOperand = calculate(state.firstOperand, secondOperand)
+    const newOperand = calculate(parseFloat(state.firstOperand), parseFloat(secondOperand))
     return {
       operator,
-      firstOperand: newOperand,
+      firstOperand: newOperand.toString(),
       secondOperand: undefined
     }
   }
@@ -62,6 +78,8 @@ export const calculatorReducer = (state: CalculatorState, action: CalculatorActi
       return handleOperatorPressed(state, action.payload)
     case EQUALS_PRESSED:
       return calculateResult(state, undefined)
+    case DECIMAL_PRESSED:
+      return handleDecimalPressed(state)
     case CLEAR_CALCULATOR:
       return calculatorInitialState
     default:

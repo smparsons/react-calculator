@@ -6,7 +6,7 @@ export const NumberButton = ({ value, dispatch }: NumberButtonProps) => {
   const className = !value ? `${baseClass} zero` : baseClass
 
   return (
-    <button className={className} onClick={() => dispatch(numberPressed(value))}>
+    <button className={className} onClick={() => dispatch(numberPressed(value.toString()))}>
       {value}
     </button>
   )

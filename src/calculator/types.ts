@@ -1,6 +1,6 @@
 export interface CalculatorState {
-  firstOperand: number | undefined
-  secondOperand: number | undefined
+  firstOperand: string | undefined
+  secondOperand: string | undefined
   operator: string | undefined
 }
 

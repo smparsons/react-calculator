@@ -2,10 +2,11 @@ export const NUMBER_PRESSED = 'NUMBER_PRESSED'
 export const OPERATOR_PRESSED = 'OPERATOR_PRESSED'
 export const EQUALS_PRESSED = 'EQUALS_PRESSED'
 export const CLEAR_CALCULATOR = 'CLEAR_CALCULATOR'
+export const DECIMAL_PRESSED = 'DECIMAL_PRESSED'
 
 interface NumberPressedAction {
   type: typeof NUMBER_PRESSED
-  payload: number
+  payload: string
 }
 
 interface OperatorPressedAction {
@@ -21,7 +22,11 @@ interface ClearCalculatorAction {
   type: typeof CLEAR_CALCULATOR
 }
 
-export const numberPressed = (value: number): NumberPressedAction => ({
+interface DecimalPressedAction {
+  type: typeof DECIMAL_PRESSED
+}
+
+export const numberPressed = (value: string): NumberPressedAction => ({
   type: NUMBER_PRESSED,
   payload: value
 })
@@ -39,4 +44,13 @@ export const clearCalculator = (): ClearCalculatorAction => ({
   type: CLEAR_CALCULATOR
 })
 
-export type CalculatorAction = NumberPressedAction | OperatorPressedAction | EqualsPressedAction | ClearCalculatorAction
+export const decimalPressed = (): DecimalPressedAction => ({
+  type: DECIMAL_PRESSED
+})
+
+export type CalculatorAction =
+  | NumberPressedAction
+  | OperatorPressedAction
+  | EqualsPressedAction
+  | ClearCalculatorAction
+  | DecimalPressedAction
