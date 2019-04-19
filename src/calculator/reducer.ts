@@ -25,8 +25,7 @@ const handleNumberPressed = (state: CalculatorState, pressedNumber: number): Cal
 
   return {
     ...state,
-    [operandToUpdate]: newOperand,
-    display: newOperand
+    [operandToUpdate]: newOperand
   }
 }
 
@@ -43,8 +42,7 @@ const calculateResult = (state: CalculatorState, operator: string | undefined): 
     return {
       operator,
       firstOperand: newOperand,
-      secondOperand: undefined,
-      display: newOperand
+      secondOperand: undefined
     }
   }
   return state
