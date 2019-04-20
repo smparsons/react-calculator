@@ -1,15 +1,25 @@
+body,
+button {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
 .calculator-wrapper {
   width: 300px;
   background-color: black;
   border: 1px solid black;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .calculator-display {
-  height: 75px;
+  display: grid;
+  align-items: center;
+  justify-items: right;
+  padding: 8px 4px;
   background-color: #303030;
+  box-shadow: inset 3px 3px 3px black;
   color: white;
-  font-size: 4em;
-  text-align: right;
+  font-size: 2.5em;
 }
 
 .calculator-buttons {

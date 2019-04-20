@@ -5,8 +5,8 @@ import { operators } from '../constants'
 const operatorSymbols = {
   [operators.add]: '+',
   [operators.subtract]: '-',
-  [operators.multiply]: 'x',
-  [operators.divide]: '/'
+  [operators.multiply]: '×',
+  [operators.divide]: '÷'
 }
 
 export const OperatorButton = ({ operator, dispatch }: OperatorButtonProps): JSX.Element => (
