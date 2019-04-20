@@ -4,7 +4,9 @@ import {
   DECIMAL_PRESSED,
   EQUALS_PRESSED,
   NUMBER_PRESSED,
-  OPERATOR_PRESSED
+  OPERATOR_PRESSED,
+  PERCENTAGE_PRESSED,
+  TOGGLE_SIGN
 } from './actions'
 import { operators } from './constants'
 import { calculatorInitialState, CalculatorState } from './types'
@@ -14,6 +16,12 @@ const appendNumber = (currentNumber: string | undefined, pressedNumber: string):
 
 const appendDecimal = (currentNumber: string | undefined): string =>
   currentNumber !== undefined && currentNumber.includes('.') ? currentNumber : `${currentNumber || 0}.`
+
+const toggleSign = (currentNumber: string | undefined): string | undefined =>
+  /* prettier-ignore */
+  !currentNumber ? currentNumber
+    : currentNumber.includes('-') ? currentNumber.substring(1)
+      : `-${currentNumber}`
 
 const calculatorFuncs = {
   [operators.add]: (x: number, y: number): number => x + y,
@@ -29,19 +37,32 @@ const decideOperandToUpdate = (state: CalculatorState): string => {
     : 'firstOperand'
 }
 
-const handleNumberPressed = (state: CalculatorState, pressedNumber: string): CalculatorState => {
+const updateOperandReducer = (state: CalculatorState, action: CalculatorAction): CalculatorState => {
   const operandToUpdate = decideOperandToUpdate(state)
-  return {
-    ...state,
-    [operandToUpdate]: appendNumber(state[operandToUpdate], pressedNumber)
-  }
-}
 
-const handleDecimalPressed = (state: CalculatorState): CalculatorState => {
-  const operandToUpdate = decideOperandToUpdate(state)
-  return {
-    ...state,
-    [operandToUpdate]: appendDecimal(state[operandToUpdate])
+  switch (action.type) {
+    case NUMBER_PRESSED:
+      return {
+        ...state,
+        [operandToUpdate]: appendNumber(state[operandToUpdate], action.payload)
+      }
+    case DECIMAL_PRESSED:
+      return {
+        ...state,
+        [operandToUpdate]: appendDecimal(state[operandToUpdate])
+      }
+    case TOGGLE_SIGN:
+      return {
+        ...state,
+        [operandToUpdate]: toggleSign(state[operandToUpdate])
+      }
+    case PERCENTAGE_PRESSED:
+      return {
+        ...state,
+        [operandToUpdate]: (parseFloat(state[operandToUpdate]) / 100).toString()
+      }
+    default:
+      return state
   }
 }
 
@@ -64,24 +85,21 @@ const calculateResult = (state: CalculatorState, operator: string | undefined): 
   return state
 }
 
-const handleOperatorPressed = (state: CalculatorState, operator: string): CalculatorState => {
-  return state.firstOperand !== undefined && state.secondOperand !== undefined
-    ? calculateResult(state, operator)
-    : updateOperator(state, operator)
-}
-
 export const calculatorReducer = (state: CalculatorState, action: CalculatorAction): CalculatorState => {
   switch (action.type) {
-    case NUMBER_PRESSED:
-      return handleNumberPressed(state, action.payload)
     case OPERATOR_PRESSED:
-      return handleOperatorPressed(state, action.payload)
+      return state.firstOperand !== undefined && state.secondOperand !== undefined
+        ? calculateResult(state, action.payload)
+        : updateOperator(state, action.payload)
     case EQUALS_PRESSED:
       return calculateResult(state, undefined)
-    case DECIMAL_PRESSED:
-      return handleDecimalPressed(state)
     case CLEAR_CALCULATOR:
       return calculatorInitialState
+    case NUMBER_PRESSED:
+    case DECIMAL_PRESSED:
+    case PERCENTAGE_PRESSED:
+    case TOGGLE_SIGN:
+      return updateOperandReducer(state, action)
     default:
       return state
   }

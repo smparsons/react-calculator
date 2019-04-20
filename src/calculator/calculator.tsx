@@ -13,8 +13,8 @@ export const Calculator = (): JSX.Element => {
       <div className="calculator-buttons">
         <div className="calculator-button-row">
           <ActionButton actionType={actions.clear} dispatch={dispatch} />
-          <button className="calculator-button dark-gray">+/-</button>
-          <button className="calculator-button dark-gray">%</button>
+          <ActionButton actionType={actions.toggleSign} dispatch={dispatch} />
+          <ActionButton actionType={actions.percentagePressed} dispatch={dispatch} />
           <OperatorButton operator={operators.divide} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
