@@ -2,9 +2,9 @@ export const NUMBER_PRESSED = 'NUMBER_PRESSED'
 export const OPERATOR_PRESSED = 'OPERATOR_PRESSED'
 export const EQUALS_PRESSED = 'EQUALS_PRESSED'
 export const CLEAR_CALCULATOR = 'CLEAR_CALCULATOR'
-export const DECIMAL_PRESSED = 'DECIMAL_PRESSED'
+export const DECIMAL_POINT_PRESSED = 'DECIMAL_POINT_PRESSED'
 export const TOGGLE_SIGN = 'TOGGLE_SIGN'
-export const PERCENTAGE_PRESSED = 'PERCENTAGE_PRESSED'
+export const PERCENT_PRESSED = 'PERCENT_PRESSED'
 
 interface NumberPressedAction {
   type: typeof NUMBER_PRESSED
@@ -24,16 +24,16 @@ interface ClearCalculatorAction {
   type: typeof CLEAR_CALCULATOR
 }
 
-interface DecimalPressedAction {
-  type: typeof DECIMAL_PRESSED
+interface DecimalPointPressedAction {
+  type: typeof DECIMAL_POINT_PRESSED
 }
 
 interface ToggleSignAction {
   type: typeof TOGGLE_SIGN
 }
 
-interface PercentagePressedAction {
-  type: typeof PERCENTAGE_PRESSED
+interface PercentPressedAction {
+  type: typeof PERCENT_PRESSED
 }
 
 export const numberPressed = (value: string): NumberPressedAction => ({
@@ -54,16 +54,16 @@ export const clearCalculator = (): ClearCalculatorAction => ({
   type: CLEAR_CALCULATOR
 })
 
-export const decimalPressed = (): DecimalPressedAction => ({
-  type: DECIMAL_PRESSED
+export const decimalPointPressed = (): DecimalPointPressedAction => ({
+  type: DECIMAL_POINT_PRESSED
 })
 
 export const toggleSign = (): ToggleSignAction => ({
   type: TOGGLE_SIGN
 })
 
-export const percentagePressed = (): PercentagePressedAction => ({
-  type: PERCENTAGE_PRESSED
+export const percentPressed = (): PercentPressedAction => ({
+  type: PERCENT_PRESSED
 })
 
 export type CalculatorAction =
@@ -71,6 +71,6 @@ export type CalculatorAction =
   | OperatorPressedAction
   | EqualsPressedAction
   | ClearCalculatorAction
-  | DecimalPressedAction
+  | DecimalPointPressedAction
   | ToggleSignAction
-  | PercentagePressedAction
+  | PercentPressedAction

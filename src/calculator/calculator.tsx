@@ -14,7 +14,7 @@ export const Calculator = (): JSX.Element => {
         <div className="calculator-button-row">
           <ActionButton actionType={actions.clear} dispatch={dispatch} />
           <ActionButton actionType={actions.toggleSign} dispatch={dispatch} />
-          <ActionButton actionType={actions.percentagePressed} dispatch={dispatch} />
+          <ActionButton actionType={actions.percentPressed} dispatch={dispatch} />
           <OperatorButton operator={operators.divide} dispatch={dispatch} />
         </div>
         <div className="calculator-button-row">
@@ -37,7 +37,7 @@ export const Calculator = (): JSX.Element => {
         </div>
         <div className="calculator-button-row">
           <NumberButton value={0} dispatch={dispatch} />
-          <ActionButton actionType={actions.decimalPressed} dispatch={dispatch} />
+          <ActionButton actionType={actions.decimalPointPressed} dispatch={dispatch} />
           <ActionButton actionType={actions.equals} dispatch={dispatch} />
         </div>
       </div>

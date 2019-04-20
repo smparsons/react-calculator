@@ -2,9 +2,9 @@ import * as React from 'react'
 import {
   CalculatorAction,
   clearCalculator,
-  decimalPressed,
+  decimalPointPressed,
   equalsPressed,
-  percentagePressed,
+  percentPressed,
   toggleSign
 } from '../actions'
 import { actions } from '../constants'
@@ -12,9 +12,9 @@ import { actions } from '../constants'
 const actionDetailsDictionary = {
   [actions.equals]: { symbol: '=', className: 'orange', actionCreator: equalsPressed },
   [actions.clear]: { symbol: 'AC', className: 'dark-gray', actionCreator: clearCalculator },
-  [actions.decimalPressed]: { symbol: '.', className: 'gray', actionCreator: decimalPressed },
+  [actions.decimalPointPressed]: { symbol: '.', className: 'gray', actionCreator: decimalPointPressed },
   [actions.toggleSign]: { symbol: '+/-', className: 'dark-gray', actionCreator: toggleSign },
-  [actions.percentagePressed]: { symbol: '%', className: 'dark-gray', actionCreator: percentagePressed }
+  [actions.percentPressed]: { symbol: '%', className: 'dark-gray', actionCreator: percentPressed }
 } as ActionDetailsDictionary
 
 export const ActionButton = ({ actionType, dispatch }: ActionButtonProps): JSX.Element => {

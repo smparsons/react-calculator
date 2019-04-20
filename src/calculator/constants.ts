@@ -8,7 +8,7 @@ export const operators = {
 export const actions = {
   equals: 'equals',
   clear: 'clear',
-  decimalPressed: 'decimalPressed',
+  decimalPointPressed: 'decimalPointPressed',
   toggleSign: 'toggleSign',
-  percentagePressed: 'percentagePressed'
+  percentPressed: 'percentPressed'
 }

@@ -1,11 +1,11 @@
 import {
   CalculatorAction,
   CLEAR_CALCULATOR,
-  DECIMAL_PRESSED,
+  DECIMAL_POINT_PRESSED,
   EQUALS_PRESSED,
   NUMBER_PRESSED,
   OPERATOR_PRESSED,
-  PERCENTAGE_PRESSED,
+  PERCENT_PRESSED,
   TOGGLE_SIGN
 } from './actions'
 import { operators } from './constants'
@@ -14,7 +14,7 @@ import { calculatorInitialState, CalculatorState } from './types'
 const appendNumber = (currentNumber: string | undefined, pressedNumber: string): string =>
   currentNumber ? `${currentNumber}${pressedNumber}` : pressedNumber
 
-const appendDecimal = (currentNumber: string | undefined): string =>
+const appendDecimalPoint = (currentNumber: string | undefined): string =>
   currentNumber !== undefined && currentNumber.includes('.') ? currentNumber : `${currentNumber || 0}.`
 
 const toggleSign = (currentNumber: string | undefined): string | undefined =>
@@ -46,17 +46,17 @@ const updateOperandReducer = (state: CalculatorState, action: CalculatorAction):
         ...state,
         [operandToUpdate]: appendNumber(state[operandToUpdate], action.payload)
       }
-    case DECIMAL_PRESSED:
+    case DECIMAL_POINT_PRESSED:
       return {
         ...state,
-        [operandToUpdate]: appendDecimal(state[operandToUpdate])
+        [operandToUpdate]: appendDecimalPoint(state[operandToUpdate])
       }
     case TOGGLE_SIGN:
       return {
         ...state,
         [operandToUpdate]: toggleSign(state[operandToUpdate])
       }
-    case PERCENTAGE_PRESSED:
+    case PERCENT_PRESSED:
       return {
         ...state,
         [operandToUpdate]: (parseFloat(state[operandToUpdate]) / 100).toString()
@@ -96,8 +96,8 @@ export const calculatorReducer = (state: CalculatorState, action: CalculatorActi
     case CLEAR_CALCULATOR:
       return calculatorInitialState
     case NUMBER_PRESSED:
-    case DECIMAL_PRESSED:
-    case PERCENTAGE_PRESSED:
+    case DECIMAL_POINT_PRESSED:
+    case PERCENT_PRESSED:
     case TOGGLE_SIGN:
       return updateOperandReducer(state, action)
     default:
