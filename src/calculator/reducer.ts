@@ -19,10 +19,7 @@ const appendDecimalPoint = (currentNumber: string | undefined): string =>
   currentNumber !== undefined && currentNumber.includes('.') ? currentNumber : `${currentNumber || 0}.`
 
 const toggleSign = (currentNumber: string | undefined): string | undefined =>
-  /* prettier-ignore */
-  !currentNumber ? currentNumber
-    : currentNumber.includes('-') ? currentNumber.substring(1)
-      : `-${currentNumber}`
+  currentNumber ? (-1 * parseFloat(currentNumber)).toString() : currentNumber
 
 const calculatorFuncs = {
   [operators.add]: (x: number, y: number): Big => new Big(x).plus(y),
