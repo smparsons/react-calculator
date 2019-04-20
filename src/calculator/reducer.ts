@@ -1,3 +1,4 @@
+import Big from 'big.js'
 import {
   CalculatorAction,
   CLEAR_CALCULATOR,
@@ -24,10 +25,10 @@ const toggleSign = (currentNumber: string | undefined): string | undefined =>
       : `-${currentNumber}`
 
 const calculatorFuncs = {
-  [operators.add]: (x: number, y: number): number => x + y,
-  [operators.subtract]: (x: number, y: number): number => x - y,
-  [operators.multiply]: (x: number, y: number): number => x * y,
-  [operators.divide]: (x: number, y: number): number => x / y
+  [operators.add]: (x: number, y: number): Big => new Big(x).plus(y),
+  [operators.subtract]: (x: number, y: number): Big => new Big(x).minus(y),
+  [operators.multiply]: (x: number, y: number): Big => new Big(x).times(y),
+  [operators.divide]: (x: number, y: number): Big => new Big(x).div(y)
 }
 
 const decideOperandToUpdate = (state: CalculatorState): string => {
@@ -59,7 +60,7 @@ const updateOperandReducer = (state: CalculatorState, action: CalculatorAction):
     case PERCENT_PRESSED:
       return {
         ...state,
-        [operandToUpdate]: (parseFloat(state[operandToUpdate]) / 100).toString()
+        [operandToUpdate]: new Big(parseFloat(state[operandToUpdate])).div(100).toString()
       }
     default:
       return state
