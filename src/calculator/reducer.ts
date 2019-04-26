@@ -21,6 +21,9 @@ const appendDecimalPoint = (currentNumber: string | undefined): string =>
 const toggleSign = (currentNumber: string | undefined): string | undefined =>
   currentNumber ? (-1 * parseFloat(currentNumber)).toString() : currentNumber
 
+const asPercentage = (currentNumber: string | undefined): string =>
+  new Big(parseFloat(currentNumber || '0')).div(100).toString()
+
 const calculatorFuncs = {
   [operators.add]: (x: number, y: number): Big => new Big(x).plus(y),
   [operators.subtract]: (x: number, y: number): Big => new Big(x).minus(y),
@@ -28,76 +31,67 @@ const calculatorFuncs = {
   [operators.divide]: (x: number, y: number): Big => new Big(x).div(y)
 }
 
-const decideOperandToUpdate = (state: CalculatorState): string => {
-  return (state.firstOperand !== undefined && state.secondOperand !== undefined) ||
-    (state.firstOperand !== undefined && state.operator && state.secondOperand === undefined)
-    ? 'secondOperand'
-    : 'firstOperand'
-}
-
-const updateOperandReducer = (state: CalculatorState, action: CalculatorAction): CalculatorState => {
-  const operandToUpdate = decideOperandToUpdate(state)
-
-  switch (action.type) {
-    case NUMBER_PRESSED:
-      return {
-        ...state,
-        [operandToUpdate]: appendNumber(state[operandToUpdate], action.payload)
-      }
-    case DECIMAL_POINT_PRESSED:
-      return {
-        ...state,
-        [operandToUpdate]: appendDecimalPoint(state[operandToUpdate])
-      }
-    case TOGGLE_SIGN:
-      return {
-        ...state,
-        [operandToUpdate]: toggleSign(state[operandToUpdate])
-      }
-    case PERCENT_PRESSED:
-      return {
-        ...state,
-        [operandToUpdate]: new Big(parseFloat(state[operandToUpdate])).div(100).toString()
-      }
-    default:
-      return state
-  }
-}
-
-const updateOperator = (state: CalculatorState, operator: string): CalculatorState => ({
-  ...state,
-  operator
-})
-
-const calculateResult = (state: CalculatorState, operator: string | undefined): CalculatorState => {
-  if (state.firstOperand && state.operator) {
-    const calculate = calculatorFuncs[state.operator]
-    const secondOperand = state.secondOperand === undefined ? state.firstOperand : state.secondOperand
-    const newOperand = calculate(parseFloat(state.firstOperand), parseFloat(secondOperand))
-    return {
-      operator,
-      firstOperand: newOperand.toString(),
-      secondOperand: undefined
-    }
-  }
-  return state
+const calculateResult = (total: string | undefined, value: string | undefined, operator: string): string => {
+  const calculate = calculatorFuncs[operator]
+  const firstOperand = total
+  const secondOperand = value === undefined ? total : value
+  const newTotal = calculate(parseFloat(firstOperand || '0'), parseFloat(secondOperand || '0'))
+  return newTotal.toString()
 }
 
 export const calculatorReducer = (state: CalculatorState, action: CalculatorAction): CalculatorState => {
   switch (action.type) {
     case OPERATOR_PRESSED:
-      return state.firstOperand !== undefined && state.secondOperand !== undefined
-        ? calculateResult(state, action.payload)
-        : updateOperator(state, action.payload)
+      return state.operator && state.value
+        ? {
+            operator: action.payload,
+            total: calculateResult(state.total, state.value, state.operator),
+            value: undefined
+          }
+        : {
+            operator: action.payload,
+            total: state.value || state.total,
+            value: undefined
+          }
     case EQUALS_PRESSED:
-      return calculateResult(state, undefined)
+      return state.operator
+        ? {
+            ...calculatorInitialState,
+            total: calculateResult(state.total, state.value, state.operator)
+          }
+        : state
     case CLEAR_CALCULATOR:
       return calculatorInitialState
     case NUMBER_PRESSED:
+      return {
+        ...state,
+        value: appendNumber(state.value, action.payload)
+      }
     case DECIMAL_POINT_PRESSED:
-    case PERCENT_PRESSED:
+      return {
+        ...state,
+        value: appendDecimalPoint(state.value)
+      }
     case TOGGLE_SIGN:
-      return updateOperandReducer(state, action)
+      return state.value
+        ? {
+            ...state,
+            value: toggleSign(state.value)
+          }
+        : {
+            ...state,
+            total: toggleSign(state.total)
+          }
+    case PERCENT_PRESSED:
+      return state.value
+        ? {
+            ...state,
+            value: asPercentage(state.value)
+          }
+        : {
+            ...state,
+            total: asPercentage(state.total)
+          }
     default:
       return state
   }

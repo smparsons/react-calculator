@@ -9,7 +9,7 @@ export const Calculator = (): JSX.Element => {
 
   return (
     <div className="calculator-wrapper">
-      <div className="calculator-display">{state.secondOperand || state.firstOperand || 0}</div>
+      <div className="calculator-display">{state.value || state.total || '0'}</div>
       <div className="calculator-buttons">
         <div className="calculator-button-row">
           <ActionButton actionType={actions.clear} dispatch={dispatch} />
