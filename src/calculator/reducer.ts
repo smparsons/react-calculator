@@ -21,8 +21,11 @@ const appendDecimalPoint = (currentNumber: string | undefined): string =>
 const toggleSign = (currentNumber: string | undefined): string | undefined =>
   currentNumber ? (-1 * parseFloat(currentNumber)).toString() : currentNumber
 
-const asPercentage = (currentNumber: string | undefined): string =>
-  new Big(parseFloat(currentNumber || '0')).div(100).toString()
+const asPercentage = (currentNumber: string | undefined): string => {
+  const value = parseFloat(currentNumber || '0')
+  const result = value === Infinity || value === -Infinity ? value : new Big(parseFloat(currentNumber || '0')).div(100)
+  return result.toString()
+}
 
 const calculatorFuncs = {
   [operators.add]: (x: number, y: number): Big => new Big(x).plus(y),
@@ -33,9 +36,14 @@ const calculatorFuncs = {
 
 const calculateResult = (total: string | undefined, value: string | undefined, operator: string): string => {
   const calculate = calculatorFuncs[operator]
-  const firstOperand = total
-  const secondOperand = value === undefined ? total : value
-  const newTotal = calculate(parseFloat(firstOperand || '0'), parseFloat(secondOperand || '0'))
+  const firstOperand = parseFloat(total || '0')
+  const secondOperand = parseFloat(value || total || '0')
+  const newTotal =
+    operator === operators.divide && secondOperand === 0
+      ? Infinity
+      : firstOperand === Infinity || firstOperand === -Infinity
+      ? firstOperand
+      : calculate(firstOperand, secondOperand)
   return newTotal.toString()
 }
 
