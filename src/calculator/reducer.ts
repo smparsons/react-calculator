@@ -23,7 +23,7 @@ const toggleSign = (currentNumber: string | undefined): string | undefined =>
 
 const asPercentage = (currentNumber: string | undefined): string => {
   const value = parseFloat(currentNumber || '0')
-  const result = value === Infinity || value === -Infinity ? value : new Big(parseFloat(currentNumber || '0')).div(100)
+  const result = value === Infinity || value === -Infinity ? value : new Big(value).div(100)
   return result.toString()
 }
 
