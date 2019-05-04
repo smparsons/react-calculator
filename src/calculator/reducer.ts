@@ -9,8 +9,15 @@ import {
   PERCENT_PRESSED,
   TOGGLE_SIGN
 } from './actions'
-import { operators } from './constants'
+import { operatorSymbols } from './constants'
 import { calculatorInitialState, CalculatorState } from './types'
+
+const calculatorFuncs = {
+  [operatorSymbols.add]: (x: number, y: number): Big => new Big(x).plus(y),
+  [operatorSymbols.subtract]: (x: number, y: number): Big => new Big(x).minus(y),
+  [operatorSymbols.multiply]: (x: number, y: number): Big => new Big(x).times(y),
+  [operatorSymbols.divide]: (x: number, y: number): Big => new Big(x).div(y)
+}
 
 const appendNumber = (currentNumber: string | undefined, pressedNumber: string): string =>
   currentNumber ? `${currentNumber}${pressedNumber}` : pressedNumber
@@ -27,19 +34,12 @@ const asPercentage = (currentNumber: string | undefined): string => {
   return result.toString()
 }
 
-const calculatorFuncs = {
-  [operators.add]: (x: number, y: number): Big => new Big(x).plus(y),
-  [operators.subtract]: (x: number, y: number): Big => new Big(x).minus(y),
-  [operators.multiply]: (x: number, y: number): Big => new Big(x).times(y),
-  [operators.divide]: (x: number, y: number): Big => new Big(x).div(y)
-}
-
 const calculateResult = (total: string | undefined, value: string | undefined, operator: string): string => {
   const calculate = calculatorFuncs[operator]
   const firstOperand = parseFloat(total || '0')
   const secondOperand = parseFloat(value || total || '0')
   const newTotal =
-    operator === operators.divide && secondOperand === 0
+    operator === operatorSymbols.divide && secondOperand === 0
       ? Infinity
       : firstOperand === Infinity || firstOperand === -Infinity
       ? firstOperand

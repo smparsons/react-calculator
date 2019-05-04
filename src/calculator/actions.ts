@@ -36,35 +36,45 @@ interface PercentPressedAction {
   type: typeof PERCENT_PRESSED
 }
 
-export const numberPressed = (value: string): NumberPressedAction => ({
+const numberPressed = (value: string): NumberPressedAction => ({
   type: NUMBER_PRESSED,
   payload: value
 })
 
-export const operatorPressed = (operator: string): OperatorPressedAction => ({
+const operatorPressed = (operator: string): OperatorPressedAction => ({
   type: OPERATOR_PRESSED,
   payload: operator
 })
 
-export const equalsPressed = (): EqualsPressedAction => ({
+const equalsPressed = (): EqualsPressedAction => ({
   type: EQUALS_PRESSED
 })
 
-export const clearCalculator = (): ClearCalculatorAction => ({
+const clearCalculator = (): ClearCalculatorAction => ({
   type: CLEAR_CALCULATOR
 })
 
-export const decimalPointPressed = (): DecimalPointPressedAction => ({
+const decimalPointPressed = (): DecimalPointPressedAction => ({
   type: DECIMAL_POINT_PRESSED
 })
 
-export const toggleSign = (): ToggleSignAction => ({
+const toggleSign = (): ToggleSignAction => ({
   type: TOGGLE_SIGN
 })
 
-export const percentPressed = (): PercentPressedAction => ({
+const percentPressed = (): PercentPressedAction => ({
   type: PERCENT_PRESSED
 })
+
+export const actionCreators = {
+  numberPressed,
+  operatorPressed,
+  equalsPressed,
+  clearCalculator,
+  decimalPointPressed,
+  toggleSign,
+  percentPressed
+}
 
 export type CalculatorAction =
   | NumberPressedAction
