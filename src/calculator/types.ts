@@ -1,11 +1,13 @@
 export interface CalculatorState {
-  total: string | undefined
-  value: string | undefined
-  operator: string | undefined
+  total: string | null
+  value: string | null
+  operator: string | null
+  lastUpdatedKey: string | null
 }
 
 export const calculatorInitialState = {
-  total: undefined,
-  value: undefined,
-  operator: undefined
+  total: null,
+  value: null,
+  operator: null,
+  lastUpdatedKey: null
 } as CalculatorState

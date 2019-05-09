@@ -1,7 +1,8 @@
 export const NUMBER_PRESSED = 'NUMBER_PRESSED'
 export const OPERATOR_PRESSED = 'OPERATOR_PRESSED'
 export const EQUALS_PRESSED = 'EQUALS_PRESSED'
-export const CLEAR_CALCULATOR = 'CLEAR_CALCULATOR'
+export const ALL_CLEAR = 'ALL_CLEAR'
+export const CLEAR = 'CLEAR'
 export const DECIMAL_POINT_PRESSED = 'DECIMAL_POINT_PRESSED'
 export const TOGGLE_SIGN = 'TOGGLE_SIGN'
 export const PERCENT_PRESSED = 'PERCENT_PRESSED'
@@ -20,8 +21,12 @@ interface EqualsPressedAction {
   type: typeof EQUALS_PRESSED
 }
 
-interface ClearCalculatorAction {
-  type: typeof CLEAR_CALCULATOR
+interface AllClearAction {
+  type: typeof ALL_CLEAR
+}
+
+interface ClearAction {
+  type: typeof CLEAR
 }
 
 interface DecimalPointPressedAction {
@@ -50,8 +55,12 @@ const equalsPressed = (): EqualsPressedAction => ({
   type: EQUALS_PRESSED
 })
 
-const clearCalculator = (): ClearCalculatorAction => ({
-  type: CLEAR_CALCULATOR
+const allClear = (): AllClearAction => ({
+  type: ALL_CLEAR
+})
+
+const clear = (): ClearAction => ({
+  type: CLEAR
 })
 
 const decimalPointPressed = (): DecimalPointPressedAction => ({
@@ -70,7 +79,8 @@ export const actionCreators = {
   numberPressed,
   operatorPressed,
   equalsPressed,
-  clearCalculator,
+  allClear,
+  clear,
   decimalPointPressed,
   toggleSign,
   percentPressed
@@ -80,7 +90,8 @@ export type CalculatorAction =
   | NumberPressedAction
   | OperatorPressedAction
   | EqualsPressedAction
-  | ClearCalculatorAction
+  | AllClearAction
+  | ClearAction
   | DecimalPointPressedAction
   | ToggleSignAction
   | PercentPressedAction

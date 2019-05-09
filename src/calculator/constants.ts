@@ -4,3 +4,9 @@ export const operatorSymbols = {
   multiply: '×',
   divide: '÷'
 }
+
+export const stateKeys = {
+  total: 'total',
+  value: 'value',
+  operator: 'operator'
+}
