@@ -3,7 +3,7 @@ button {
   font-family: Verdana, Geneva, sans-serif;
 }
 
-.calculator-wrapper {
+.calculator {
   width: 300px;
   background-color: black;
   border: 1px solid black;
@@ -11,7 +11,7 @@ button {
   overflow: hidden;
 }
 
-.calculator-display {
+.calculator .display {
   display: grid;
   align-items: center;
   justify-items: right;
@@ -22,36 +22,31 @@ button {
   font-size: 2.5em;
 }
 
-.calculator-buttons {
-  display: grid;
-  gap: 1px;
-}
-
-.calculator-button-row {
+.calculator .keypad {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1px;
+}
+
+.calculator .keypad .button {
+  color: white;
+  font-size: 1.25em;
   height: 65px;
 }
 
-.calculator-button {
-  color: white;
-  font-size: 1.25em;
-}
-
-.wide {
+.calculator .keypad .button.wide {
   grid-column-start: 1;
   grid-column-end: 3;
 }
 
-.gray {
+.calculator .keypad .button.gray {
   background-color: #686868;
 }
 
-.dark-gray {
+.calculator .keypad .button.dark-gray {
   background-color: #484848;
 }
 
-.orange {
+.calculator .keypad .button.orange {
   background-color: orange;
 }

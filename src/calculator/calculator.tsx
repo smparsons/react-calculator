@@ -1,91 +1,81 @@
 import * as React from 'react'
-import { actionCreators, CalculatorAction } from './actions'
-import { CalculatorButton } from './calculatorButton'
+import { Button } from './button'
 import { operatorSymbols } from './constants'
-import { calculatorReducer, getDisplayKey } from './reducer'
-import { calculatorInitialState } from './types'
+import { calculatorActions, getDisplayKey } from './logic'
+import { calculatorInitialState, CalculatorState } from './types'
 
-interface CalculatorActions {
-  numberPressed: (value: string) => void
-  operatorPressed: (operator: string) => void
-  equalsPressed: () => void
-  allClear: () => void
-  clear: () => void
-  decimalPointPressed: () => void
-  toggleSign: () => void
-  percentPressed: () => void
-}
-
-const mapActions = (dispatch: React.Dispatch<CalculatorAction>): CalculatorActions => ({
-  numberPressed: (value: string) => dispatch(actionCreators.numberPressed(value)),
-  operatorPressed: (operator: string) => dispatch(actionCreators.operatorPressed(operator)),
-  equalsPressed: () => dispatch(actionCreators.equalsPressed()),
-  allClear: () => dispatch(actionCreators.allClear()),
-  clear: () => dispatch(actionCreators.clear()),
-  decimalPointPressed: () => dispatch(actionCreators.decimalPointPressed()),
-  toggleSign: () => dispatch(actionCreators.toggleSign()),
-  percentPressed: () => dispatch(actionCreators.percentPressed())
+const mapActions = (currentState: CalculatorState, setState: SetStateFunc): CalculatorActions => ({
+  appendNumber: (value: string) => setState(calculatorActions.appendNumber(currentState, value)),
+  setOperator: (operator: string) => setState(calculatorActions.setOperator(currentState, operator)),
+  calculateTotal: () => setState(calculatorActions.calculateTotal(currentState)),
+  allClear: () => calculatorInitialState,
+  clear: () => setState(calculatorActions.clear(currentState)),
+  appendDecimalPoint: () => setState(calculatorActions.appendDecimalPoint(currentState)),
+  toggleSign: () => setState(calculatorActions.toggleSign(currentState)),
+  applyPercent: () => setState(calculatorActions.applyPercent(currentState))
 })
 
 const emptyDisplay: string = '0'
 
+const getDisplay = (state: CalculatorState): string => {
+  const displayKey = getDisplayKey(state.lastUpdatedKey)
+  const display = state[displayKey]
+  return display || emptyDisplay
+}
+
 export const Calculator = (): JSX.Element => {
-  const [state, dispatch] = React.useReducer(calculatorReducer, calculatorInitialState)
+  const [state, setState] = React.useState(calculatorInitialState)
   const {
-    numberPressed,
-    operatorPressed,
-    equalsPressed,
+    appendNumber,
+    setOperator,
+    calculateTotal,
     allClear,
     clear,
-    decimalPointPressed,
+    appendDecimalPoint,
     toggleSign,
-    percentPressed
-  } = mapActions(dispatch)
+    applyPercent
+  } = mapActions(state, setState)
 
   const { lastUpdatedKey } = state
   const lastUpdated = lastUpdatedKey ? state[lastUpdatedKey] : null
 
-  const displayKey = getDisplayKey(lastUpdatedKey)
-  const display = state[displayKey]
-
   return (
-    <div className="calculator-wrapper">
-      <div className="calculator-display">{display || emptyDisplay}</div>
-      <div className="calculator-buttons">
-        <div className="calculator-button-row">
-          <CalculatorButton
-            text={lastUpdated ? 'C' : 'AC'}
-            className="dark-gray"
-            onPress={lastUpdated ? clear : allClear}
-          />
-          <CalculatorButton text="+/-" className="dark-gray" onPress={toggleSign} />
-          <CalculatorButton text="%" className="dark-gray" onPress={percentPressed} />
-          <CalculatorButton text={operatorSymbols.divide} className="orange" onPress={operatorPressed} />
-        </div>
-        <div className="calculator-button-row">
-          <CalculatorButton text="7" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="8" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="9" className="gray" onPress={numberPressed} />
-          <CalculatorButton text={operatorSymbols.multiply} className="orange" onPress={operatorPressed} />
-        </div>
-        <div className="calculator-button-row">
-          <CalculatorButton text="4" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="5" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="6" className="gray" onPress={numberPressed} />
-          <CalculatorButton text={operatorSymbols.subtract} className="orange" onPress={operatorPressed} />
-        </div>
-        <div className="calculator-button-row">
-          <CalculatorButton text="1" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="2" className="gray" onPress={numberPressed} />
-          <CalculatorButton text="3" className="gray" onPress={numberPressed} />
-          <CalculatorButton text={operatorSymbols.add} className="orange" onPress={operatorPressed} />
-        </div>
-        <div className="calculator-button-row">
-          <CalculatorButton text="0" className="gray wide" onPress={numberPressed} />
-          <CalculatorButton text="." className="gray" onPress={decimalPointPressed} />
-          <CalculatorButton text="=" className="orange" onPress={equalsPressed} />
-        </div>
+    <div className="calculator">
+      <div className="display">{getDisplay(state)}</div>
+      <div className="keypad">
+        <Button text={lastUpdated ? 'C' : 'AC'} className="dark-gray" onClick={lastUpdated ? clear : allClear} />
+        <Button text="+/-" className="dark-gray" onClick={toggleSign} />
+        <Button text="%" className="dark-gray" onClick={applyPercent} />
+        <Button text={operatorSymbols.divide} className="orange" onClick={setOperator} />
+        <Button text="7" className="gray" onClick={appendNumber} />
+        <Button text="8" className="gray" onClick={appendNumber} />
+        <Button text="9" className="gray" onClick={appendNumber} />
+        <Button text={operatorSymbols.multiply} className="orange" onClick={setOperator} />
+        <Button text="4" className="gray" onClick={appendNumber} />
+        <Button text="5" className="gray" onClick={appendNumber} />
+        <Button text="6" className="gray" onClick={appendNumber} />
+        <Button text={operatorSymbols.subtract} className="orange" onClick={setOperator} />
+        <Button text="1" className="gray" onClick={appendNumber} />
+        <Button text="2" className="gray" onClick={appendNumber} />
+        <Button text="3" className="gray" onClick={appendNumber} />
+        <Button text={operatorSymbols.add} className="orange" onClick={setOperator} />
+        <Button text="0" className="gray wide" onClick={appendNumber} />
+        <Button text="." className="gray" onClick={appendDecimalPoint} />
+        <Button text="=" className="orange" onClick={calculateTotal} />
       </div>
     </div>
   )
 }
+
+interface CalculatorActions {
+  appendNumber: (value: string) => void
+  setOperator: (operator: string) => void
+  calculateTotal: () => void
+  allClear: () => void
+  clear: () => void
+  appendDecimalPoint: () => void
+  toggleSign: () => void
+  applyPercent: () => void
+}
+
+type SetStateFunc = React.Dispatch<React.SetStateAction<CalculatorState>>
