@@ -1,5 +1,8 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
@@ -16,6 +19,12 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "jsx-no-lambda": false,
-    "typedef": [true, "call-signature"]
+    "quotemark": false,
+    "semicolon": false,
+    "trailing-comma": false,
+    "typedef": [
+      true,
+      "call-signature"
+    ]
   }
 }
