@@ -56,7 +56,7 @@ const appendDecimalPoint = (state: CalculatorState): CalculatorState => {
     value: currentNumber !== null && currentNumber.includes('.')
       ? currentNumber
       : `${currentNumber || 0}.`,
-    lastUpdatedKey: state.value
+    lastUpdatedKey: stateKeys.value
   }
 }
 

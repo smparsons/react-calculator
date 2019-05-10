@@ -35,13 +35,17 @@ export const Calculator = (): JSX.Element => {
   } = mapActions(state, setState)
 
   const { lastUpdatedKey } = state
-  const lastUpdated = lastUpdatedKey ? state[lastUpdatedKey] : null
+  const lastUpdatedValue = lastUpdatedKey ? state[lastUpdatedKey] : null
 
   return (
     <div className="calculator">
       <div className="display">{getDisplay(state)}</div>
       <div className="keypad">
-        <Button text={lastUpdated ? 'C' : 'AC'} className="dark-gray" onClick={lastUpdated ? clear : allClear} />
+        <Button
+          text={lastUpdatedValue ? 'C' : 'AC'}
+          className="dark-gray"
+          onClick={lastUpdatedValue ? clear : allClear}
+        />
         <Button text="+/-" className="dark-gray" onClick={toggleSign} />
         <Button text="%" className="dark-gray" onClick={applyPercent} />
         <Button text={operatorSymbols.divide} className="orange" onClick={setOperator} />
