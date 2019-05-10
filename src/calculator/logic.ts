@@ -13,19 +13,17 @@ const calculate = (total: string | null, value: string | null, operator: string)
   const calculationFunc = calculatorFuncs[operator]
   const firstOperand = parseFloat(total || '0')
   const secondOperand = parseFloat(value || total || '0')
-  const newTotal =
-    operator === operatorSymbols.divide && secondOperand === 0
-      ? Infinity
-      : firstOperand === Infinity || firstOperand === -Infinity
-      ? firstOperand
+  const newTotal = operator === operatorSymbols.divide && secondOperand === 0 ? Infinity
+    : firstOperand === Infinity || firstOperand === -Infinity ? firstOperand
       : calculationFunc(firstOperand, secondOperand)
   return newTotal.toString()
 }
 
 const setOperator = (state: CalculatorState, operator: string): CalculatorState => ({
   operator,
-  total:
-    state.operator && state.value ? calculate(state.total, state.value, state.operator) : state.value || state.total,
+  total: state.operator && state.value
+    ? calculate(state.total, state.value, state.operator)
+    : state.value || state.total,
   value: null,
   lastUpdatedKey: stateKeys.operator
 })
@@ -33,10 +31,10 @@ const setOperator = (state: CalculatorState, operator: string): CalculatorState 
 const calculateTotal = (state: CalculatorState): CalculatorState => {
   return state.operator
     ? {
-        ...calculatorInitialState,
-        total: calculate(state.total, state.value, state.operator),
-        lastUpdatedKey: stateKeys.total
-      }
+      ...calculatorInitialState,
+      total: calculate(state.total, state.value, state.operator),
+      lastUpdatedKey: stateKeys.total
+    }
     : state
 }
 
@@ -44,7 +42,9 @@ const appendNumber = (state: CalculatorState, pressedNumber: string): Calculator
   const currentNumber = state.value
   return {
     ...state,
-    value: currentNumber && currentNumber !== '0' ? `${currentNumber}${pressedNumber}` : pressedNumber,
+    value: currentNumber && currentNumber !== '0'
+      ? `${currentNumber}${pressedNumber}`
+      : pressedNumber,
     lastUpdatedKey: stateKeys.value
   }
 }
@@ -53,7 +53,9 @@ const appendDecimalPoint = (state: CalculatorState): CalculatorState => {
   const currentNumber = state.value
   return {
     ...state,
-    value: currentNumber !== null && currentNumber.includes('.') ? currentNumber : `${currentNumber || 0}.`,
+    value: currentNumber !== null && currentNumber.includes('.')
+      ? currentNumber
+      : `${currentNumber || 0}.`,
     lastUpdatedKey: state.value
   }
 }
@@ -64,7 +66,9 @@ const clear = (state: CalculatorState): CalculatorState => {
 }
 
 export const getDisplayKey = (lastUpdatedKey: string | null): string =>
-  lastUpdatedKey ? (lastUpdatedKey === stateKeys.value ? stateKeys.value : stateKeys.total) : stateKeys.value
+  lastUpdatedKey
+    ? (lastUpdatedKey === stateKeys.value ? stateKeys.value : stateKeys.total)
+    : stateKeys.value
 
 const toggleSign = (state: CalculatorState): CalculatorState => {
   const stateKey = getDisplayKey(state.lastUpdatedKey)
@@ -76,7 +80,9 @@ const toggleSign = (state: CalculatorState): CalculatorState => {
 const applyPercent = (state: CalculatorState): CalculatorState => {
   const stateKey = getDisplayKey(state.lastUpdatedKey)
   const parsedValue = parseFloat(state[stateKey] || '0')
-  const result = parsedValue === Infinity || parsedValue === -Infinity ? parsedValue : new Big(parsedValue).div(100)
+  const result = parsedValue === Infinity || parsedValue === -Infinity
+    ? parsedValue
+    : new Big(parsedValue).div(100)
   return { ...state, [stateKey]: result.toString() }
 }
 
