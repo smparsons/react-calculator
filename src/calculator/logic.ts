@@ -69,8 +69,8 @@ export const getDisplayKey = (lastUpdatedKey: string | null): string =>
 const toggleSign = (state: CalculatorState): CalculatorState => {
   const stateKey = getDisplayKey(state.lastUpdatedKey)
   const value = state[stateKey]
-  const toggledValue = value ? (-1 * parseFloat(value)).toString() : value
-  return { ...state, [stateKey]: toggledValue }
+  const signToggledValue = value ? (-1 * parseFloat(value)).toString() : value
+  return { ...state, [stateKey]: signToggledValue }
 }
 
 const applyPercent = (state: CalculatorState): CalculatorState => {

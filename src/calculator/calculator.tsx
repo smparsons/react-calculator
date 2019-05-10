@@ -15,12 +15,10 @@ const mapActions = (currentState: CalculatorState, setState: SetStateFunc): Calc
   applyPercent: () => setState(calculatorActions.applyPercent(currentState))
 })
 
-const emptyDisplay: string = '0'
-
 const getDisplay = (state: CalculatorState): string => {
   const displayKey = getDisplayKey(state.lastUpdatedKey)
   const display = state[displayKey]
-  return display || emptyDisplay
+  return display || '0'
 }
 
 export const Calculator = (): JSX.Element => {
