@@ -1,7 +1,7 @@
 {
   "name": "react-calculator",
   "version": "1.0.0",
-  "description": "A calculator written using React.",
+  "description": "A calculator written using React with TypeScript.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --mode development",
