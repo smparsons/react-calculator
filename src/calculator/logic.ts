@@ -1,5 +1,5 @@
 import Big from 'big.js'
-import { operatorSymbols, stateKeys } from './constants'
+import { clearedDisplay, operatorSymbols, stateKeys } from './constants'
 import { calculatorInitialState, CalculatorState } from './types'
 
 const calculatorFuncs = {
@@ -60,21 +60,12 @@ const appendDecimalPoint = (state: CalculatorState): CalculatorState => {
   }
 }
 
-export const canClearLastEntry = (state: CalculatorState): boolean => {
-  const { lastUpdatedKey } = state
-  const lastUpdatedValue = lastUpdatedKey ? state[lastUpdatedKey] : null
-  return !!lastUpdatedValue
-}
-
 const clearLastEntry = (state: CalculatorState): CalculatorState => {
   const stateKey = state.lastUpdatedKey
   return stateKey ? { ...state, [stateKey]: null } : state
 }
 
-const clear = (state: CalculatorState): CalculatorState =>
-  canClearLastEntry(state) ? clearLastEntry(state) : calculatorInitialState
-
-export const getDisplayKey = (lastUpdatedKey: string | null): string =>
+const getDisplayKey = (lastUpdatedKey: string | null): string =>
   lastUpdatedKey
     ? (lastUpdatedKey === stateKeys.value ? stateKeys.value : stateKeys.total)
     : stateKeys.value
@@ -95,12 +86,25 @@ const applyPercent = (state: CalculatorState): CalculatorState => {
   return { ...state, [stateKey]: result.toString() }
 }
 
+export const canClearLastEntry = (state: CalculatorState): boolean => {
+  const { lastUpdatedKey } = state
+  const lastUpdatedValue = lastUpdatedKey ? state[lastUpdatedKey] : null
+  return !!lastUpdatedValue
+}
+
+export const getDisplay = (state: CalculatorState): string => {
+  const displayKey = getDisplayKey(state.lastUpdatedKey)
+  return state[displayKey] || clearedDisplay
+}
+
 export const calculatorActions = {
   setOperator,
   calculateTotal,
   appendNumber,
   appendDecimalPoint,
-  clear,
+  clear: (state: CalculatorState): CalculatorState => canClearLastEntry(state)
+    ? clearLastEntry(state)
+    : calculatorInitialState,
   toggleSign,
   applyPercent
 }

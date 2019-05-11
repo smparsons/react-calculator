@@ -1,12 +1,7 @@
 import * as React from 'react'
 import { clearedDisplay, clearText, flashDuration } from './constants'
-import { calculatorActions, canClearLastEntry, getDisplayKey } from './logic'
+import { calculatorActions, canClearLastEntry, getDisplay } from './logic'
 import { CalculatorDisplayState, calculatorInitialState, CalculatorState } from './types'
-
-const getDisplay = (state: CalculatorState): string => {
-  const displayKey = getDisplayKey(state.lastUpdatedKey)
-  return state[displayKey] || clearedDisplay
-}
 
 const mapActions = (currentState: CalculatorState, updateCalculator: UpdateCalculatorFunc): CalculatorActions => ({
   appendNumber: (value: string) => updateCalculator(calculatorActions.appendNumber(currentState, value), false),
