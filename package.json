@@ -2,7 +2,7 @@
   "name": "react-calculator",
   "version": "1.0.0",
   "description": "A calculator written using React with TypeScript.",
-  "homepage": "http://smparsons.github.io/react-calculator",
+  "homepage": "https://smparsons.github.io/react-calculator",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --port 9000 --inline --progress --profile --colors --watch --mode development",
