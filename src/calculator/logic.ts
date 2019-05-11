@@ -60,10 +60,19 @@ const appendDecimalPoint = (state: CalculatorState): CalculatorState => {
   }
 }
 
-const clear = (state: CalculatorState): CalculatorState => {
+export const canClearLastEntry = (state: CalculatorState): boolean => {
+  const { lastUpdatedKey } = state
+  const lastUpdatedValue = lastUpdatedKey ? state[lastUpdatedKey] : null
+  return !!lastUpdatedValue
+}
+
+const clearLastEntry = (state: CalculatorState): CalculatorState => {
   const stateKey = state.lastUpdatedKey
   return stateKey ? { ...state, [stateKey]: null } : state
 }
+
+const clear = (state: CalculatorState): CalculatorState =>
+  canClearLastEntry(state) ? clearLastEntry(state) : calculatorInitialState
 
 export const getDisplayKey = (lastUpdatedKey: string | null): string =>
   lastUpdatedKey

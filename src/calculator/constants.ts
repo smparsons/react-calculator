@@ -1,3 +1,11 @@
+export const flashDuration = 75
+export const clearedDisplay = '0'
+
+export const clearText = {
+  allClear: 'AC',
+  clear: 'C'
+}
+
 export const operatorSymbols = {
   add: '+',
   subtract: '-',

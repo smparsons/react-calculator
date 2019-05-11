@@ -11,3 +11,8 @@ export const calculatorInitialState = {
   operator: null,
   lastUpdatedKey: null
 } as CalculatorState
+
+export interface CalculatorDisplayState {
+  display: string | null,
+  clearText: string
+}

@@ -1,51 +1,26 @@
 import * as React from 'react'
 import { Button } from './button'
 import { operatorSymbols } from './constants'
-import { calculatorActions, getDisplayKey } from './logic'
-import { calculatorInitialState, CalculatorState } from './types'
-
-const mapActions = (currentState: CalculatorState, setState: SetStateFunc): CalculatorActions => ({
-  appendNumber: (value: string) => setState(calculatorActions.appendNumber(currentState, value)),
-  setOperator: (operator: string) => setState(calculatorActions.setOperator(currentState, operator)),
-  calculateTotal: () => setState(calculatorActions.calculateTotal(currentState)),
-  allClear: () => setState(calculatorInitialState),
-  clear: () => setState(calculatorActions.clear(currentState)),
-  appendDecimalPoint: () => setState(calculatorActions.appendDecimalPoint(currentState)),
-  toggleSign: () => setState(calculatorActions.toggleSign(currentState)),
-  applyPercent: () => setState(calculatorActions.applyPercent(currentState))
-})
-
-const getDisplay = (state: CalculatorState): string => {
-  const displayKey = getDisplayKey(state.lastUpdatedKey)
-  const display = state[displayKey]
-  return display || '0'
-}
+import { useCalculator } from './hooks'
 
 export const Calculator = (): JSX.Element => {
-  const [state, setState] = React.useState(calculatorInitialState)
+  const [displayState, actions] = useCalculator()
+  const { display, clearText } = displayState
   const {
     appendNumber,
     setOperator,
     calculateTotal,
-    allClear,
     clear,
     appendDecimalPoint,
     toggleSign,
     applyPercent
-  } = mapActions(state, setState)
-
-  const { lastUpdatedKey } = state
-  const lastUpdatedValue = lastUpdatedKey ? state[lastUpdatedKey] : null
+  } = actions
 
   return (
     <div className="calculator">
-      <div className="display">{getDisplay(state)}</div>
+      <div className="display">{display}</div>
       <div className="keypad">
-        <Button
-          text={lastUpdatedValue ? 'C' : 'AC'}
-          className="dark-gray"
-          onClick={lastUpdatedValue ? clear : allClear}
-        />
+        <Button text={clearText} className="dark-gray" onClick={clear} />
         <Button text="+/-" className="dark-gray" onClick={toggleSign} />
         <Button text="%" className="dark-gray" onClick={applyPercent} />
         <Button text={operatorSymbols.divide} className="orange" onClick={setOperator} />
@@ -68,16 +43,3 @@ export const Calculator = (): JSX.Element => {
     </div>
   )
 }
-
-interface CalculatorActions {
-  appendNumber: (value: string) => void
-  setOperator: (operator: string) => void
-  calculateTotal: () => void
-  allClear: () => void
-  clear: () => void
-  appendDecimalPoint: () => void
-  toggleSign: () => void
-  applyPercent: () => void
-}
-
-type SetStateFunc = React.Dispatch<React.SetStateAction<CalculatorState>>

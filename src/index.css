@@ -30,11 +30,11 @@ html, body {
   display: grid;
   align-items: center;
   justify-items: right;
-  padding: 8px 4px;
+  padding: 8px 16px;
   background-color: #303030;
   box-shadow: inset 0 0 4px black;
   color: #f0f0f0;
-  font-size: 2.75em;
+  font-size: 3em;
 }
 
 .calculator .keypad {
