@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const DESTINATION = path.resolve(__dirname, 'dist')
+const DESTINATION = path.resolve(__dirname, 'build')
 
 module.exports = {
   entry: ['./src/index.tsx'],
@@ -50,7 +50,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   devServer: {
     publicPath: '/',
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: path.resolve(__dirname, 'build'),
     hot: true
   }
 }
