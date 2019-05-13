@@ -8,7 +8,7 @@ This is a simple standard calculator that I built using React with TypeScript.
 
 ## How to Run
 
-You will need to have node and npm setup first before you can run this program locally. 
+You will need to have node and npm setup first before you can run this project locally. 
 
 ### Installing and Running
 
