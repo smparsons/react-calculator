@@ -53,7 +53,9 @@ const appendNumber = (state: CalculatorState, pressedNumber: string): Calculator
   const currentNumber = state.value
   return {
     ...state,
-    value: currentNumber && currentNumber !== '0' ? append(currentNumber, pressedNumber) : pressedNumber,
+    value: currentNumber && currentNumber !== '0'
+      ? append(currentNumber, pressedNumber)
+      : pressedNumber,
     lastUpdatedKey: stateKeys.value
   }
 }
@@ -62,7 +64,9 @@ const appendDecimalPoint = (state: CalculatorState): CalculatorState => {
   const currentNumber = state.value
   return {
     ...state,
-    value: currentNumber && !currentNumber.includes('.') ? append(currentNumber, '.') : currentNumber,
+    value: currentNumber && currentNumber.includes('.')
+      ? currentNumber
+      : append(currentNumber || '0', '.'),
     lastUpdatedKey: stateKeys.value
   }
 }
