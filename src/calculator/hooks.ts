@@ -1,7 +1,10 @@
 import * as React from 'react'
-import { clearedDisplay, clearText, flashDuration } from './constants'
+import { clearedDisplay } from './constants'
 import { calculatorActions, canClearLastEntry, getDisplay } from './logic'
 import { CalculatorDisplayState, calculatorInitialState, CalculatorState } from './types'
+
+const flashDuration = 75
+const clearText = { allClear: 'AC', clear: 'C' }
 
 export const useCalculator = (): CalculatorHookResult => {
   const [internalState, setInternalState] = React.useState(calculatorInitialState)

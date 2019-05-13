@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button } from './button'
 import { operatorSymbols } from './constants'
+import { Display } from './display'
 import { useCalculator } from './hooks'
 
 export const Calculator = (): JSX.Element => {
@@ -18,7 +19,7 @@ export const Calculator = (): JSX.Element => {
 
   return (
     <div className="calculator">
-      <div className="display">{display}</div>
+      <Display>{display}</Display>
       <div className="keypad">
         <Button text={clearText} className="dark-gray" onClick={clear} />
         <Button text="+/-" className="dark-gray" onClick={toggleSign} />
